@@ -7,8 +7,15 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/vision', function(req, res, next) {
-    vision(req, res);
-})
+    fs.writeFile('image.png', req.body.image, "base64", function(err) {
+        console.log(err);
+        vision(req, res);
+    });
+});
+
+router.get('/image', function(req, res, next) {
+    res.sendFile(__dirname + '../image.jpg');
+});
 
 function decodeBase64Image(imageString) {
     return new Buffer(imageString, 'base64');
@@ -22,7 +29,7 @@ async function vision(req, res) {
     const client = new vision.ImageAnnotatorClient();
   
     // Performs label detection on the image file
-    const [result] = await client.labelDetection(req.body.image);
+    const [result] = await client.labelDetection("https://api.michaelzhao.xyz/postup/image");
     const labels = result.labelAnnotations;
     console.log(labels);
     
