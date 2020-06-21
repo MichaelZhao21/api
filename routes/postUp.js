@@ -14,7 +14,7 @@ router.post('/vision', function(req, res, next) {
 });
 
 router.get('/image', function(req, res, next) {
-    res.sendFile(__dirname + '/../image.jpg');
+    res.sendFile(path.resolve(__dirname + '/../image.jpg'));
 });
 
 async function vision(req, res) {
