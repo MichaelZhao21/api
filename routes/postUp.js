@@ -17,10 +17,6 @@ router.get('/image', function(req, res, next) {
     res.sendFile(__dirname + '../image.jpg');
 });
 
-function decodeBase64Image(imageString) {
-    return new Buffer(imageString, 'base64');
-}
-
 async function vision(req, res) {
     // Imports the Google Cloud client library
     const vision = require('@google-cloud/vision');
