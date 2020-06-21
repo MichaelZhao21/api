@@ -12,9 +12,7 @@ router.post('/vision', function(req, res, next) {
         console.log(err);
         var labels = vision();
         console.log(labels);
-        var quotes = getQuotes(labels);
-        console.log(quotes);
-        res.send({quotes});
+        getQuotes(labels, res);
     });
 });
 
@@ -35,7 +33,7 @@ async function vision() {
     return labels;
 }  
 
-async function getQuotes(labels) {
+async function getQuotes(labels, res) {
     var quotes = [];
     try {
         const options = {
@@ -48,7 +46,8 @@ async function getQuotes(labels) {
                 quotes.push({label: labels[i], quote: response.data.results[0].quote});
             }
         }
-        return quotes;
+        console.log(quotes);
+        res.send({quotes});
     } catch (error) {
         console.log(error.response.body);
     }
