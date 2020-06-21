@@ -43,7 +43,7 @@ function getQuotes(labels, res) {
         .then(function (response) {
             console.log(response.data);
             if (response.data.results.length != 0) {
-                quotes.push({ label: labels[i], quote: response.data.results[0].quote });
+                quotes.push({ label: labels[0], quote: response.data.results[0].quote });
                 console.log(quotes);
                 res.send({ quotes });
             }
