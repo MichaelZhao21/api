@@ -7,13 +7,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/vision', function(req, res, next) {
-    fs.writeFile('image.png', req.body.image, 'base64', function(err) {
-        // vision(res)
+    var buff = decodeBase64Image(req.body.image);
+    fs.writeFile('image.jpg', buff, function(err) {
         console.log(err);
-        res.send("huh\n");
-    });
+    })
     // vision(res);
 })
+
+function decodeBase64Image(imageString) {
+    return new Buffer(imageString, 'base64');
+}
 
 async function vision() {
     // Imports the Google Cloud client library
