@@ -11,4 +11,5 @@ app.use('/users', usersRouter);
 app.use('/api/testAPI', testAPIRouter);
 app.use('/postup', postUpRouter);
 
-app.listen(8080, '172.31.62.232');
+// app.listen(8080, '172.31.62.232');
+app.listen(8080);
