@@ -8,14 +8,13 @@ router.get('/', function(req, res, next) {
 
 router.post('/vision', function(req, res, next) {
     console.log(req.body);
-    res.send("HI");
-    // fs.writeFile("text.txt", req.body, function(err) {
-    //     console.log(err);
-    // })
-    // fs.writeFile('image.jpg', req.body, 'base64', function(err) {
-    //     console.log(err);
-    //     res.send("hi\n");
-    // })
+    fs.writeFile("text.txt", req.body, function(err) {
+        console.log(err);
+    })
+    fs.writeFile('image.jpg', req.body, 'base64', function(err) {
+        console.log(err);
+        res.send("hi bitch");
+    })
     // vision(res);
 })
 
