@@ -7,7 +7,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/vision', function(req, res, next) {
-    console.log(req === null);
+    console.log(req.body);
+    console.log(req);
     res.send("HI");
     // fs.writeFile("text.txt", req.body, function(err) {
     //     console.log(err);
