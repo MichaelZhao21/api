@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
 router.post('/vision', function (req, res, next) {
     fs.writeFile(__dirname + '/image.png', req.body.image, "base64", function (err) {
         console.log(err);
-        vision();
+        vision(res);
     });
 });
 
@@ -18,7 +18,7 @@ router.get('/image', function (req, res, next) {
     res.sendFile(__dirname + '/image.png');
 });
 
-async function vision() {
+async function vision(res) {
     // Imports the Google Cloud client library
     const vision = require('@google-cloud/vision');
 
