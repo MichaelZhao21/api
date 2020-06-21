@@ -7,25 +7,14 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/vision', function(req, res, next) {
-    console.log(req.body);
-    fs.writeFile("text.txt", req.body.image, function(err) {
-        console.log(err);
-    })
-    fs.writeFile("test.t", "hewwo", function(err) {
-        console.log(err);
-    });
-    fs.writeFile('image.jpg', req.body.image, 'base64', function(err) {
-        console.log(err);
-        res.send("hi bitch");
-    })
-    // vision(res);
+    vision(req, res);
 })
 
 function decodeBase64Image(imageString) {
     return new Buffer(imageString, 'base64');
 }
 
-async function vision() {
+async function vision(req, res) {
     // Imports the Google Cloud client library
     const vision = require('@google-cloud/vision');
   
@@ -33,7 +22,7 @@ async function vision() {
     const client = new vision.ImageAnnotatorClient();
   
     // Performs label detection on the image file
-    const [result] = await client.labelDetection('./image.png');
+    const [result] = await client.labelDetection(req.body.image);
     const labels = result.labelAnnotations;
     console.log(labels);
     
