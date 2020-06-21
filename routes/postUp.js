@@ -7,9 +7,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/vision', function(req, res, next) {
-    var buff = decodeBase64Image(req.body.image);
-    fs.writeFile('image.jpg', buff, function(err) {
+    fs.writeFile('image.jpg', req.body.image, 'base64', function(err) {
         console.log(err);
+        res.send("hi\n");
     })
     // vision(res);
 })
