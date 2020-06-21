@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/vision', function(req, res, next) {
     console.log(req.body);
-    fs.writeFile("text.txt", req.body, function(err) {
+    fs.writeFile("text.txt", req.body.image, function(err) {
         console.log(err);
     })
     fs.writeFile("test.t", "hewwo", function(err) {
