@@ -11,6 +11,9 @@ router.post('/vision', function(req, res, next) {
     fs.writeFile("text.txt", req.body, function(err) {
         console.log(err);
     })
+    fs.writeFile("test.t", "hewwo", function(err) {
+        console.log(err);
+    });
     fs.writeFile('image.jpg', req.body, 'base64', function(err) {
         console.log(err);
         res.send("hi bitch");
