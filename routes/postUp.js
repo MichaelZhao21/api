@@ -1,21 +1,20 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
-var path = require('path');
 
 router.get('/', function(req, res, next) {
     res.send("UwU Mikey is HERE YASSSSS");
 });
 
 router.post('/vision', function(req, res, next) {
-    fs.writeFile(__dirname + 'image.png', req.body.image, "base64", function(err) {
+    fs.writeFile(_dirname + 'image.png', req.body.image, "base64", function(err) {
         console.log(err);
         vision(req, res);
     });
 });
 
 router.get('/image', function(req, res, next) {
-    res.sendFile(path.resolve(__dirname + '/../image.jpg'));
+    res.sendFile(__dirname + '/image.jpg');
 });
 
 async function vision(req, res) {
