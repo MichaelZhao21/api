@@ -38,12 +38,12 @@ async function vision() {
 async function getQuotes(labels) {
     var quotes = [];
     try {
+        const options = {
+            headers: {'Authorization' : 'Token 8dba24d3822fbcc2be30a9988e4ce8db5bb2e438'}
+        };
         for (var i = 0; i < labels.length; i++) {
-            const response = await axios({
-                method: 'get',
-                url: "https://api.paperquotes.com/apiv1/quotes/?tags=" + labels[i].description.toLowerCase(),
-                headers: {'Authorization' : 'Token 8dba24d3822fbcc2be30a9988e4ce8db5bb2e438'}
-            });
+            const response = await axios.get("https://api.paperquotes.com/apiv1/quotes/?tags=" + labels[i].description.toLowerCase(), options);
+            console.log(response.data);
             if (response.data.results.length != 0) {
                 quotes.push({label: labels[i], quote: response.data.results[0].quote});
             }
