@@ -1,28 +1,32 @@
 var express = require('express');
 var router = express.Router();
-const {Storage} = require('@google-cloud/storage');
+var fs = require('fs');
 
 router.get('/', function(req, res, next) {
     res.send("UwU Mikey is HERE YASSSSS");
 });
 
-router.get('/vision', function(req, res, next) {
-    vision(res);
+router.post('/vision', function(req, res, next) {
+    fs.writeFile('image.png', req.body.image, 'base64', function(err) {
+        // vision(res)
+        console.log(err);
+        res.send("huh\n");
+    });
+    // vision(res);
 })
 
-async function vision(res) {
+async function vision() {
     // Imports the Google Cloud client library
     const vision = require('@google-cloud/vision');
   
-    var pic = 'https://api.michaelzhao.xyz/hotdude';
-
     // Creates a client
     const client = new vision.ImageAnnotatorClient();
   
     // Performs label detection on the image file
-    const [result] = await client.labelDetection(pic);
+    const [result] = await client.labelDetection('./image.png');
     const labels = result.labelAnnotations;
-    res.send(labels);
+    console.log(labels);
+    
 }  
 
 module.exports = router;

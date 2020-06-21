@@ -6,6 +6,7 @@ var usersRouter = require('./routes/users');
 var testAPIRouter = require('./routes/testAPI');
 var postUpRouter = require('./routes/postUp');
 
+app.use(express.json());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/testAPI', testAPIRouter);
