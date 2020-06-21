@@ -42,7 +42,8 @@ function getQuotes(labels, res) {
     axios.get("https://api.paperquotes.com/apiv1/quotes/?tags=" + labels[0].description.toLowerCase(), options)
         .then(function (response) {
             if (response.data.results.length != 0) {
-                quotes.push({ label: labels[0], quote: response.data.results[0].quote.quote });
+                quotes.push({ label: labels[0], quote: response.data.results[0].quote });
+                console.log("-----------------------------------------");
                 console.log(quotes);
                 res.send({ quotes });
             }
