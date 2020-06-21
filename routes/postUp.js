@@ -10,9 +10,7 @@ router.get('/', function (req, res, next) {
 router.post('/vision', function (req, res, next) {
     fs.writeFile(__dirname + '/image.png', req.body.image, "base64", function (err) {
         console.log(err);
-        var labels = vision();
-        console.log(labels);
-        getQuotes(labels, res);
+        vision();
     });
 });
 
@@ -30,7 +28,9 @@ async function vision() {
     // Performs label detection on the image file
     const [result] = await client.labelDetection("https://api.michaelzhao.xyz/postup/image");
     const labels = result.labelAnnotations;
-    return labels;
+    
+    console.log(labels);
+    getQuotes(labels, res);
 }
 
 function getQuotes(labels, res) {
