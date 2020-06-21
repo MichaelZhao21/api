@@ -40,7 +40,7 @@ function getQuotes(labels, res) {
             headers: {'Authorization' : 'Token 8dba24d3822fbcc2be30a9988e4ce8db5bb2e438'}
         };
         for (var i = 0; i < labels.length; i++) { 
-            const response = axios.get("https://api.paperquotes.com/apiv1/quotes/?tags=" + labels[i].description.toLowerCase(), options)
+            axios.get("https://api.paperquotes.com/apiv1/quotes/?tags=" + labels[i].description.toLowerCase(), options)
                 .then(function (response) {
                     console.log(response.data);
                     if (response.data.results.length != 0) {
