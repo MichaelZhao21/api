@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/pull', function (req, res, next) {
-    console.log(req.body);
+    console.log(req);
     res.status(200);
 });
 
