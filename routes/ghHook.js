@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/pull', function (req, res, next) {
     console.log(req.body);
-    res.status(200);
+    res.sendStatus(200);
 });
 
 module.exports = router;

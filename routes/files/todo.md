@@ -1,7 +1,16 @@
-## Need to Get Done
-- HACKTAMS LOGO
+hi
+## IMPORTANT THINGS
+
+- **HACKTAMS LOGO**
 	- **DUCK DUCK DUCK - come up with low poly design**
 	- Idea: `<HACK/TAMS>` but written where the `</>` is prominent
+- Do jon's thing for hacktams login website
+	- **Find color scheme**
+- Jerry TAMS Activities
+	- Make the email thing for him :333
+
+## Other Projects
+
 - CSO Website :333
 	- Not as important but 3 things:
 	- **Design Duck**
@@ -9,8 +18,12 @@
 	- Pick colors for it
 	- Create layout for the about page
 	- Add info for the execs (? i think)
-- Do jon's thing for cso website
-	- **Find color scheme**
+- Research mechanical keyboards
+	- Find the case
+	- Find the correct motherboard
+	- Get the price of cherry mx browns
+	- Find cheap but pretty colored keycaps
+	- Light pink/blue combo would look pretty sick :))))
 - Finish the clubs website
 	- **Write the description for TCS**
 	- Find a way to sort out the links in the box
@@ -22,16 +35,8 @@
 	- Create some graphics too for the edges
 	- Look on awwwards.com to get ideas!
 - Spotify playlist website :000
-	- Config gatsby website
+	- Make sure refresh token is deleted on logout
 	- Create a logo
-
-## Others
-- Research mechanical keyboards
-	- Find the case
-	- Find the correct motherboard
-	- Get the price of cherry mx browns
-	- Find cheap but pretty colored keycaps
-	- Light pink/blue combo would look pretty sick :))))
 - TAMS Scholarships gotta go find & write!
 	- **Copy the important scholarships from the email into a google drive doc**
 	- Take that doc and format it nicely
@@ -41,21 +46,14 @@
 	- Finalize
 - Get windows terminal for the windows partition of this laptop
 - Create my blog!
-	- **USE MATTER JS!!! It's hard to do it w/o lagging bro**
-	- Move the circles into another repo and have it be a component by itself or smth TT (maybe scrap it or just upload it to a repo)
 	- Design the front page
 	- Pick color scheme for that page
 	- Make formatting for the page
-	- Fix general formatting
+	- Fix general formatting for blog posts
 	- Make mobile have no circles
 	- Create logo
 - New Tab Extension
-	- Create a good UI for the page
-	- **Dropbox pull**
-	- **Convert todo list to dropbox txt file**
-	- Editing and doing POST requests BACK to the api???
-	- Add links to the most popular pages or smth
-	- Have shortcut keys to get there
 	- Focus on the searchbar
-- learn countdown dance
-- Find a way to make my auto todolist actually automatic and run on startup TT
+	- Fix color on the clock so it has more contrast with background
+	- Add options so that only I can access my own todolist
+	- Package this!!!

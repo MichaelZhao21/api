@@ -17,7 +17,7 @@ router.get('/', function (req, res, next) {
         let data = JSON.parse(rawData);
         var oldDate = new Date(data.date);
         var currDate = new Date();
-        if (oldDate.getDate() === currDate.getDate() && oldDate.getMonth() === currDate.getMonth() && oldDate.getFullYear() === currDate.getFullYear()) {
+	if (oldDate.getDate() === currDate.getDate() && oldDate.getMonth() === currDate.getMonth() && oldDate.getFullYear() === currDate.getFullYear()) {
             res.send(data.photo);
         }
         else {
