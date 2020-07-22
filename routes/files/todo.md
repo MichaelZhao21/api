@@ -1,4 +1,3 @@
-hi
 ## IMPORTANT THINGS
 
 - **HACKTAMS LOGO**
