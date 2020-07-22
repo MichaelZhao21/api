@@ -18,7 +18,6 @@ router.get('/', function (req, res, next) {
         var oldDate = new Date(data.date);
         var currDate = new Date();
         if (oldDate.getDate() === currDate.getDate() && oldDate.getMonth() === currDate.getMonth() && oldDate.getFullYear() === currDate.getFullYear()) {
-            console.log('yes');
             res.send(data.photo);
         }
         else {
@@ -32,8 +31,8 @@ router.get('/new', function (req, res, next) {
 })
 
 function getNewPhoto(res) {
+    var currDate = new Date();
     newImage().then((data) => {
-        console.log(currDate.valueOf());
         fs.writeFile(photoDataFile, JSON.stringify({date: currDate.valueOf(), photo: data}, null, 2), (err, writeData) => {
             if (err) return console.log(err);
             res.send(data);
