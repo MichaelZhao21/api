@@ -22,26 +22,32 @@ router.get('/', function (req, res, next) {
             res.send(data.photo);
         }
         else {
-            newImage().then((data) => {
-                console.log(currDate.valueOf());
-                fs.writeFile(photoDataFile, JSON.stringify({date: currDate.valueOf(), photo: data}, null, 2), (err, writeData) => {
-                    if (err) return console.log(err);
-                    res.send(data);
-                });
-            });
+            getNewPhoto(res);
         }
     })
 });
 
-function newImage() {
-	const unsplash = new Unsplash({ accessKey: keys.access });
-	return unsplash.photos
-		.getRandomPhoto({ query: keywords[randInt(0, keywords.length)], featured: true, orientation: 'landscape' })
-		.then(toJson)
-		.then((json) => {
-			unsplash.photos.downloadPhoto(json);
-            return json;
+router.get('/new', function (req, res, next) {
+    getNewPhoto(res);
+})
+
+function getNewPhoto(res) {
+    newImage().then((data) => {
+        console.log(currDate.valueOf());
+        fs.writeFile(photoDataFile, JSON.stringify({date: currDate.valueOf(), photo: data}, null, 2), (err, writeData) => {
+            if (err) return console.log(err);
+            res.send(data);
         });
+    });
+}
+
+async function newImage() {
+	const unsplash = new Unsplash({ accessKey: keys.access });
+	const response = await unsplash.photos
+        .getRandomPhoto({ query: keywords[randInt(0, keywords.length)], featured: true, orientation: 'landscape' });
+    const json = await toJson(response);
+    unsplash.photos.downloadPhoto(json);
+    return json;
 }
 
 function randInt(min, max) {
