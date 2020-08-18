@@ -17,5 +17,6 @@ app.use('/testAPI', testAPIRouter);
 app.use('/postup', postUpRouter);
 app.use('/todo', todoRouter);
 app.use('/photo', photoRouter);
+app.use(express.static('public'));
 
 app.listen(8080);
