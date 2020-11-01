@@ -17,4 +17,4 @@ app.use('/todo', todoRouter);
 app.use('/photo', photoRouter);
 app.use(express.static('public'));
 
-app.listen(8080);
+app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}`));
