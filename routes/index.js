@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 router.get('/', function (req, res, next) {
     // TOOD: This will be replaced with a email verification and API keygen for the user
     console.log('GET /')

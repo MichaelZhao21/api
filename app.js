@@ -4,7 +4,6 @@ var app = express();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var testAPIRouter = require('./routes/testAPI');
 var todoRouter = require('./routes/todo');
 var photoRouter = require('./routes/photo');
 
@@ -12,7 +11,6 @@ app.use(bodyParser.json());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/testAPI', testAPIRouter);
 app.use('/todo', todoRouter);
 app.use('/photo', photoRouter);
 app.use(express.static('public'));
