@@ -1,7 +1,7 @@
 var express = require('express');
 const Unsplash = require('unsplash-js').default;
 var router = express.Router();
-var keys = require('./files/unsplash.json');
+var creds = require('./files/creds.json');
 const fetch = require('node-fetch');
 const { toJson } = require('unsplash-js');
 global.fetch = fetch;
@@ -48,7 +48,7 @@ function getNewPhoto(res) {
 }
 
 async function newImage() {
-	const unsplash = new Unsplash({ accessKey: keys.access });
+	const unsplash = new Unsplash({ accessKey: creds.unsplash.access });
 	const response = await unsplash.photos.getRandomPhoto({
 		query: keywords[randInt(0, keywords.length)],
 		featured: true,
