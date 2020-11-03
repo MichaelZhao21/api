@@ -8,22 +8,12 @@ router.get('/', function (req, res, next) {
     res.send({
         greeting:
             "Hello! Here's the temporary API key while I set things up! Hope you have a great day/night :DDD",
-        key: 'owoverysecretkey12345',
+        key: 'verysecretkeyOwO314',
     });
 });
 
 router.get('/admin', function (req, res, next) {
-    res.sendFile(path.join(__dirname, 'html', 'index.html'));
-});
-
-router.get('/admin-check', function (req, res, next) {
-    if (req.query.pass === process.env.ADMIN_PASS)
-        res.redirect(`${req.protocol}://${req.get('host')}/admin-dashboard`);
-    else res.redirect(`${req.protocol}://${req.get('host')}/admin`);
-});
-
-router.get('/admin-dashboard', function (req, res, next) {
-    res.sendFile(path.join(__dirname, 'html', 'admin.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
 module.exports = router;

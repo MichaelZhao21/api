@@ -31,7 +31,15 @@ router.post('/upload', function (req, res, next) {
             res.status(400);
             res.send({
                 error: '400 Bad Request',
-                description: `Request did not include 'image' and 'path' fields`,
+                description: `Invalid form response`,
+            });
+            return;
+        }
+        if (fields.pass !== process.env.ADMIN_PASS) {
+            res.status(400);
+            res.send({
+                error: '400 Bad Request',
+                description: `Invalid password`,
             });
             return;
         }
