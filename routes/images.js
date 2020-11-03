@@ -9,11 +9,15 @@ const dbx = new Dropbox.Dropbox({ accessToken: creds.dropbox.accessToken });
 
 router.get(/\/.*[^upload\-callback]/, function (req, res, next) {
     console.log(`GET /images${req.path}`);
+    // Downlaod files from dropbox
     dbx.filesDownload({ path: req.path })
         .then((data) => {
             var filePath = path.join(__dirname, 'files', req.path.substring(1));
+            // Write them to a file
             fs.writeFile(filePath, data.result.fileBinary, () => {
+                // Send that file
                 res.sendFile(filePath);
+                // Then delete it
                 setTimeout(() => {
                     fs.unlink(filePath, () => {});
                 }, 500);
