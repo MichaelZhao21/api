@@ -11,6 +11,9 @@ var photoRouter = require('./routes/photo');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Use .env file
+require('dotenv').config();
+
 // TODO: Add CORS
 
 // Serve public files
