@@ -4,7 +4,7 @@ const Dropbox = require('dropbox');
 const creds = require('./files/creds.json');
 const dbx = new Dropbox.Dropbox({ accessToken: creds.dropbox.accessToken });
 
-router.get(/\/.*[^upload-callback]/, function (req, res, next) {
+router.get(/\/.*[^upload\-callback]/, function (req, res, next) {
     console.log(`GET /images${req.path}`);
     dbx.filesDownload({ path: req.path })
         .then((data) => {
