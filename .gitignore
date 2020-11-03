@@ -2,3 +2,4 @@
 /routes/files
 /public/images
 yarn-error.log
+.env

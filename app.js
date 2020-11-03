@@ -7,10 +7,16 @@ var imagesRouter = require('./routes/images');
 var todoRouter = require('./routes/todo');
 var photoRouter = require('./routes/photo');
 
+// Body parser for JSON and X-WWW-FORM-URLENCODED formats
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // TODO: Add CORS
 
+// Serve public files
+app.use(express.static(__dirname + '/public'));
+
+// Standard routes
 app.use('/', indexRouter);
 app.use('/images', imagesRouter);
 app.use('/todo', todoRouter);

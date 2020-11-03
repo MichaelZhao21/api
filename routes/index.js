@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path');
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
@@ -9,6 +10,14 @@ router.get('/', function (req, res, next) {
             "Hello! Here's the temporary API key while I set things up! Hope you have a great day/night :DDD",
         key: 'owoverysecretkey12345'
     });
+});
+
+router.get('/admin', function (req, res, next) {
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
+
+router.post('/admin-check', function (req, res, next) {
+
 });
 
 module.exports = router;
