@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const formidable = require('formidable');
 const fs = require('fs');
+const path = require('path');
 const Dropbox = require('dropbox');
 const creds = require('./files/creds.json');
 const dbx = new Dropbox.Dropbox({ accessToken: creds.dropbox.accessToken });
@@ -10,7 +11,13 @@ router.get(/\/.*[^upload\-callback]/, function (req, res, next) {
     console.log(`GET /images${req.path}`);
     dbx.filesDownload({ path: req.path })
         .then((data) => {
-            res.send(data.result.fileBinary);
+            var filePath = path.join(__dirname, 'files', req.path.substring(1));
+            fs.writeFile(filePath, data.result.fileBinary, () => {
+                res.sendFile(filePath);
+                setTimeout(() => {
+                    fs.unlink(filePath, () => {});
+                }, 500);
+            });
         })
         .catch(() => {
             res.status(400);
