@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const formidable = require('formidable');
+const fs = require('fs');
 const Dropbox = require('dropbox');
 const creds = require('./files/creds.json');
 const dbx = new Dropbox.Dropbox({ accessToken: creds.dropbox.accessToken });
@@ -21,29 +23,33 @@ router.get(/\/.*[^upload\-callback]/, function (req, res, next) {
 });
 
 router.post('/upload', function (req, res, next) {
-    res.setHeader('Content-Type', 'application/json');
-
-    if (req.body.image === undefined || req.body.path === undefined) {
-        res.status(400);
-        res.send({
-            request: req.body,
-            error: '400 Bad Request',
-            description: `Request did not include 'image' and 'path' fields`,
-        });
-    }
-
-    dbx.filesUpload({ path: req.body.path, contents: req.body.image })
-        .then(() => {
-            res.sendStatus(200);
-        })
-        .catch((err) => {
+    console.log('POST /images/upload');
+    var form = new formidable.IncomingForm();
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            next(err);
             res.status(400);
             res.send({
-                request: req.body,
-                error: err,
-                description: `Failed Dropbox API Call: Check your image blob format or path`,
+                error: '400 Bad Request',
+                description: `Request did not include 'image' and 'path' fields`,
             });
+            return;
+        }
+        fs.readFile(files.image.path, (err, data) => {
+            dbx.filesUpload({ path: fields.path, contents: data })
+                .then(() => {
+                    res.sendStatus(200);
+                })
+                .catch((err) => {
+                    res.status(400);
+                    res.send({
+                        error: err,
+                        description: `Failed Dropbox API Call: Check your image blob format or path`,
+                    });
+                });
         });
+    });
+    return;
 });
 
 module.exports = router;

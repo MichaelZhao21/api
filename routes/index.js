@@ -17,7 +17,6 @@ router.get('/admin', function (req, res, next) {
 });
 
 router.get('/admin-check', function (req, res, next) {
-    console.log(req.query)
     if (req.query.pass === process.env.ADMIN_PASS)
         res.redirect(`${req.protocol}://${req.get('host')}/admin-dashboard`);
     else res.redirect(`${req.protocol}://${req.get('host')}/admin`);
@@ -25,6 +24,6 @@ router.get('/admin-check', function (req, res, next) {
 
 router.get('/admin-dashboard', function (req, res, next) {
     res.sendFile(path.join(__dirname, 'html', 'admin.html'));
-})
+});
 
 module.exports = router;

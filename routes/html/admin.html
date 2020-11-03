@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mikey's API Admin Dashboard</title>
-</head>
-<body>
-    <input type="file" accept="image/*" />
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mikey's API Admin Dashboard</title>
+    </head>
+    <body>
+        <form action="/images/upload" enctype="multipart/form-data" method="post">
+            <input name="path" type="text" />
+            <input name="image" type="file" accept="image/*" />
+            <input type="submit" value="Upload">
+        </form>
+    </body>
 </html>
