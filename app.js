@@ -8,6 +8,7 @@ var todoRouter = require('./routes/todo');
 var photoRouter = require('./routes/photo');
 
 // Body parser for JSON and X-WWW-FORM-URLENCODED formats
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
 
 // Use .env file
