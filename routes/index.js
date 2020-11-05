@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/admin', function (req, res, next) {
-    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'admin.html'));
 });
 
 module.exports = router;
