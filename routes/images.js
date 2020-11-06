@@ -5,10 +5,11 @@ const fs = require('fs');
 const path = require('path');
 const Dropbox = require('dropbox');
 const creds = require('./files/creds.json');
+const now = require('./now');
 const dbx = new Dropbox.Dropbox({ accessToken: creds.dropbox.accessToken });
 
 router.get(/\/.*[^upload\-callback]/, function (req, res, next) {
-    console.log(`GET /images${req.path}`);
+    console.log(`[${now()}] GET /images${req.path}`);
     // Downlaod files from dropbox
     dbx.filesDownload({ path: req.path })
         .then((data) => {
@@ -34,7 +35,7 @@ router.get(/\/.*[^upload\-callback]/, function (req, res, next) {
 });
 
 router.post('/upload', function (req, res, next) {
-    console.log('POST /images/upload');
+    console.log(`[${now()}] POST /images/upload`);
     var form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
         if (err) {
