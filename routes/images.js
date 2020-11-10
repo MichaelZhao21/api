@@ -8,23 +8,36 @@ const creds = require('./files/creds.json');
 const now = require('./now');
 const dbx = new Dropbox.Dropbox({ accessToken: creds.dropbox.accessToken });
 
-router.get(/\/.*[^upload\-callback]/, function (req, res, next) {
+const CACHE_TIMEOUT = 3600000; // Cache gets deleted after an hour (3,600,000 ms)
+var cache = {};
+
+router.get(/\/.*[^upload]/, function (req, res, next) {
     console.log(`[${now()}] GET /images${req.path}`);
+
+    // Check to see if files are in the cache
+    if (Object.keys(cache).find(key => key === req.path)) {
+        res.sendFile(cache[req.path]);
+        return;
+    }
+
     // Downlaod files from dropbox
     dbx.filesDownload({ path: req.path })
         .then((data) => {
+            // Write image to file
             var filePath = path.join(__dirname, 'files', req.path.substring(1));
-            // Write them to a file
             fs.writeFile(filePath, data.result.fileBinary, () => {
-                // Send that file
+                // Send that file and save to cache
+                // Then delete it after cache timeout
                 res.sendFile(filePath);
-                // Then delete it
+                cache[req.path] = filePath;
                 setTimeout(() => {
                     fs.unlink(filePath, () => {});
-                }, 500);
+                    delete cache[req.path];
+                }, CACHE_TIMEOUT);
             });
         })
         .catch(() => {
+            // No file at path
             res.status(400);
             res.send({
                 request: req.path,
