@@ -5,7 +5,7 @@ var now = require('./now');
 
 router.get('/', function (req, res, next) {
     // TOOD: This will be replaced with a email verification and API keygen for the user
-    console.log(`[${now()} GET /]`);
+    console.log(`[${now()}] GET /`);
     res.send({
         greeting:
             "Hello! Here's the temporary API key while I set things up! Hope you have a great day/night :DDD",
