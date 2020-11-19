@@ -24,7 +24,7 @@ router.get(/\/.*[^upload]/, function (req, res, next) {
     dbx.filesDownload({ path: req.path })
         .then((data) => {
             // Write image to file
-            var filePath = path.join(__dirname, 'files', req.path.substring(1));
+            var filePath = path.join(__dirname, 'files', req.path.substring(1).replace('/', '-'));
             fs.writeFile(filePath, data.result.fileBinary, () => {
                 // Send that file and save to cache
                 // Then delete it after cache timeout
@@ -32,7 +32,7 @@ router.get(/\/.*[^upload]/, function (req, res, next) {
                 cache[req.path] = filePath;
                 setTimeout(() => {
                     fs.unlink(filePath, () => {});
-                    delete cache[req.path];
+                    delete cache[filePath];
                 }, CACHE_TIMEOUT);
             });
         })
