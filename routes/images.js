@@ -32,7 +32,7 @@ router.get(/\/.*[^upload]/, function (req, res, next) {
                 cache[req.path] = filePath;
                 setTimeout(() => {
                     fs.unlink(filePath, () => {});
-                    delete cache[filePath];
+                    delete cache[req.path];
                 }, CACHE_TIMEOUT);
             });
         })
