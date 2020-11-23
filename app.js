@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 var app = express();
 
 var indexRouter = require('./routes/index');
-var imagesRouter = require('./routes/images');
+var staticRouter = require('./routes/static');
 var todoRouter = require('./routes/todo');
 var photoRouter = require('./routes/photo');
 
@@ -21,7 +21,8 @@ app.use(express.static(__dirname + '/public'));
 
 // Standard routes
 app.use('/', indexRouter);
-app.use('/images', imagesRouter);
+app.use('/static', staticRouter);
+app.use('/images', staticRouter);
 app.use('/todo', todoRouter);
 app.use('/photo', photoRouter);
 

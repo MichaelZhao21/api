@@ -12,7 +12,7 @@ const CACHE_TIMEOUT = 3600000; // Cache gets deleted after an hour (3,600,000 ms
 var cache = {};
 
 router.get(/\/.*[^upload]/, function (req, res, next) {
-    console.log(`[${now()}] GET /images${req.path}`);
+    console.log(`[${now()}] GET /static${req.path}`);
 
     // Check to see if files are in the cache
     if (Object.keys(cache).find(key => key === req.path)) {
