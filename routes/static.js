@@ -48,7 +48,7 @@ router.get(/\/.*[^upload]/, function (req, res, next) {
 });
 
 router.post('/upload', function (req, res, next) {
-    console.log(`[${now()}] POST /images/upload`);
+    console.log(`[${now()}] POST /static/upload`);
     var form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
         if (err) {
