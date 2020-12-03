@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 var app = express();
 
 var indexRouter = require('./routes/index');
@@ -10,12 +11,13 @@ var loggingRouter = require('./routes/logging');
 
 // Body parser for JSON and X-WWW-FORM-URLENCODED formats
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 
 // Use .env file
 require('dotenv').config();
 
-// TODO: Add CORS
+// Use CORS
+app.use(cors());
 
 // Serve public files
 app.use(express.static(__dirname + '/public'));
@@ -28,4 +30,6 @@ app.use('/todo', todoRouter);
 app.use('/photo', photoRouter);
 app.use('/log', loggingRouter);
 
-app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}`));
+app.listen(process.env.PORT || 8080, () =>
+    console.log(`Listening on port ${process.env.PORT || 8080}`)
+);
