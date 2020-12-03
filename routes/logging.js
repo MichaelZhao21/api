@@ -5,6 +5,7 @@ var router = express.Router();
 var now = require('./now');
 
 router.post('/', function (req, res, next) {
+    res.header('Access-Control-Allow-Origin','*');
     if (!req.body.dir) {
         res.status(400);
         res.send({
