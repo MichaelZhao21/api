@@ -3,6 +3,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 var app = express();
 
+// Use .env file
+require('dotenv').config();
+
+// Import routers
 var indexRouter = require('./routes/index');
 var staticRouter = require('./routes/static');
 var todoRouter = require('./routes/todo');
@@ -13,9 +17,6 @@ var dbRouter = require('./routes/db');
 // Body parser for JSON and X-WWW-FORM-URLENCODED formats
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
-
-// Use .env file
-require('dotenv').config();
 
 // Use CORS
 app.use(cors());
