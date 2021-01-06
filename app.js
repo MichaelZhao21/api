@@ -26,8 +26,7 @@ app.use(express.static(__dirname + '/public'));
 
 // Standard routes
 app.use('/', indexRouter);
-app.use('/static', staticRouter);
-app.use('/images', staticRouter);
+app.use(['/static', '/images'], staticRouter);
 app.use('/todo', todoRouter);
 app.use('/photo', photoRouter);
 app.use('/log', loggingRouter);
