@@ -12,7 +12,7 @@ var staticRouter = require('./routes/static');
 var todoRouter = require('./routes/todo');
 var photoRouter = require('./routes/photo');
 var loggingRouter = require('./routes/logging');
-var dbRouter = require('./routes/db');
+// var dbRouter = require('./routes/db');
 
 // Body parser for JSON and X-WWW-FORM-URLENCODED formats
 app.use(bodyParser.json());
@@ -30,7 +30,7 @@ app.use(['/static', '/images'], staticRouter);
 app.use('/todo', todoRouter);
 app.use('/photo', photoRouter);
 app.use('/log', loggingRouter);
-app.use('/db', dbRouter);
+// app.use('/db', dbRouter);
 
 app.listen(process.env.PORT || 8080, () =>
     console.log(`Listening on port ${process.env.PORT || 8080}`)
