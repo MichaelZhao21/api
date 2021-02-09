@@ -12,7 +12,6 @@ var staticRouter = require('./routes/static');
 var todoRouter = require('./routes/todo');
 var photoRouter = require('./routes/photo');
 var loggingRouter = require('./routes/logging');
-// var dbRouter = require('./routes/db');
 
 // Body parser for JSON and X-WWW-FORM-URLENCODED formats
 app.use(bodyParser.json());
