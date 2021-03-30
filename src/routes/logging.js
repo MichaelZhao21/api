@@ -2,10 +2,12 @@ var express = require('express');
 var path = require('path');
 var fs = require('fs');
 var router = express.Router();
-var now = require('./now');
+var now = require('../functions/now');
 
+// PATH: /log
 router.post('/', function (req, res, next) {
     res.header('Access-Control-Allow-Origin','*');
+    
     if (!req.body.dir) {
         res.status(400);
         res.send({
@@ -13,10 +15,12 @@ router.post('/', function (req, res, next) {
             error: "Missing 'dir' in request body",
         });
     }
+
     // Need to add to nginx config:
     // proxy_set_header X-Real-IP $remote_addr;
-    var ip = req.header('X-Real-IP') || req.connection.remoteAddress;
-    fs.appendFile(path.join(__dirname, 'files', 'logging', req.body.dir), `[${now()}] ${ip}\n`, () => {});
+    var ip = req.header('X-Real-IP') || req.socket.remoteAddress;
+
+    fs.appendFile(path.join(__dirname, '..', 'temp', 'logging', req.body.dir), `[${now()}] ${ip}\n`, () => {});
     res.sendStatus(200);
 });
 

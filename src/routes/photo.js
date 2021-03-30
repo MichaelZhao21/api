@@ -1,7 +1,7 @@
 var express = require('express');
 const Unsplash = require('unsplash-js').default;
 var router = express.Router();
-var creds = require('./files/creds.json');
+var creds = require('../../creds.json');
 const fetch = require('node-fetch');
 const { toJson } = require('unsplash-js');
 global.fetch = fetch;
@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 const keywords = ['mountains', 'trees', 'clouds', 'hills', 'landscape', 'ocean', 'stars', 'space'];
-const photoDataFile = path.join(__dirname, '/files/photoData.json');
+const photoDataFile = path.join(__dirname, '..', 'temp/photoData.json');
 
 router.get('/', function (req, res, next) {
 	fs.readFile(photoDataFile, (err, rawData) => {
@@ -57,10 +57,6 @@ async function newImage() {
 	const json = await toJson(response);
 	unsplash.photos.downloadPhoto(json);
 	return json;
-}
-
-function randInt(min, max) {
-	return Math.random() * (max - min) + max;
 }
 
 module.exports = router;
