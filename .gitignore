@@ -1,5 +1,6 @@
 /node_modules
-/routes/files
+*/temp
+*creds.json
 /public/images
 yarn-error.log
 .env

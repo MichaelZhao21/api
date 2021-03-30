@@ -3,7 +3,7 @@ var router = express.Router();
 var path = require('path');
 var fs = require('fs');
 
-const todoFilePath = path.join(__dirname, '/files/todo.md');
+const todoFilePath = path.join(__dirname, '..', 'temp/todo.md');
 
 router.get('/', function(req, res, next) {
     fs.readFile(todoFilePath, 'utf8', function(err, data) {

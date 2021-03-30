@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 var app = express();
 
@@ -12,24 +11,22 @@ var staticRouter = require('./routes/static');
 var todoRouter = require('./routes/todo');
 var photoRouter = require('./routes/photo');
 var loggingRouter = require('./routes/logging');
+var usageRouter = require('./routes/usage');
 
 // Body parser for JSON and X-WWW-FORM-URLENCODED formats
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
+app.use(express.json());
+app.use(express.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 
 // Use CORS
 app.use(cors());
 
-// Serve public files
-app.use(express.static(__dirname + '/public'));
-
-// Standard routes
-app.use('/', indexRouter);
-app.use(['/static', '/images'], staticRouter);
-app.use('/todo', todoRouter);
-app.use('/photo', photoRouter);
-app.use('/log', loggingRouter);
-// app.use('/db', dbRouter);
+// App routes
+app.use('/', indexRouter); // Home page + Admin page
+app.use(['/static', '/images'], staticRouter); // Serve static images from Dropbox
+app.use('/todo', todoRouter); // TODO: remove this todo endpoint
+app.use('/photo', photoRouter); // Unsplash photos API -> Also get rid of or reduce
+app.use('/log', loggingRouter); // Logging endpoint
+app.use('/usage', usageRouter); // Log app usage :)
 
 app.listen(process.env.PORT || 8080, () =>
     console.log(`Listening on port ${process.env.PORT || 8080}`)

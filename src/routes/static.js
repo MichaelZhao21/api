@@ -4,12 +4,14 @@ const formidable = require('formidable');
 const fs = require('fs');
 const path = require('path');
 const Dropbox = require('dropbox');
-const creds = require('./files/creds.json');
-const now = require('./now');
+const creds = require('../../creds.json');
+const now = require('../functions/now');
 const dbx = new Dropbox.Dropbox({ accessToken: creds.dropbox.accessToken });
 
 const CACHE_TIMEOUT = 3600000; // Cache gets deleted after an hour (3,600,000 ms)
 var cache = {};
+
+// TODO: Clear cache on start
 
 router.get(/\/(?!upload).*/, function (req, res, next) {
     console.log(`[${now()}] GET /static${req.path}`);
@@ -24,7 +26,7 @@ router.get(/\/(?!upload).*/, function (req, res, next) {
     dbx.filesDownload({ path: req.path })
         .then((data) => {
             // Write image to file
-            var filePath = path.join(__dirname, 'files', 'images', req.path.substring(1).replace('/', '-'));
+            var filePath = path.join(__dirname, '..', 'temp', 'images', req.path.substring(1).replace('/', '-'));
             fs.writeFile(filePath, data.result.fileBinary, () => {
                 // Send that file and save to cache
                 // Then delete it after cache timeout
