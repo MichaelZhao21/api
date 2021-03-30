@@ -6,11 +6,12 @@ var app = express();
 require('dotenv').config();
 
 // Import routers
-var indexRouter = require('./routes/index'); // Home page + Admin page
-var staticRouter = require('./routes/static'); // Serve static images from Dropbox
-var todoRouter = require('./routes/todo'); // TODO: remove this todo endpoint
-var photoRouter = require('./routes/photo'); // Unsplash photos API -> Also get rid of or reduce
-var loggingRouter = require('./routes/logging'); // Logging endpoint
+var indexRouter = require('./routes/index');
+var staticRouter = require('./routes/static');
+var todoRouter = require('./routes/todo');
+var photoRouter = require('./routes/photo');
+var loggingRouter = require('./routes/logging');
+var usageRouter = require('./routes/usage');
 
 // Body parser for JSON and X-WWW-FORM-URLENCODED formats
 app.use(express.json());
@@ -20,11 +21,12 @@ app.use(express.urlencoded({ limit: '50mb', extended: true, parameterLimit: 5000
 app.use(cors());
 
 // App routes
-app.use('/', indexRouter);
-app.use(['/static', '/images'], staticRouter);
-app.use('/todo', todoRouter);
-app.use('/photo', photoRouter);
-app.use('/log', loggingRouter);
+app.use('/', indexRouter); // Home page + Admin page
+app.use(['/static', '/images'], staticRouter); // Serve static images from Dropbox
+app.use('/todo', todoRouter); // TODO: remove this todo endpoint
+app.use('/photo', photoRouter); // Unsplash photos API -> Also get rid of or reduce
+app.use('/log', loggingRouter); // Logging endpoint
+app.use('/usage', usageRouter); // Log app usage :)
 
 app.listen(process.env.PORT || 8080, () =>
     console.log(`Listening on port ${process.env.PORT || 8080}`)
