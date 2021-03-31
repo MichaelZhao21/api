@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const path = require('path');
-const now = require('../functions/now');
 const Usage = require('../models/usageData');
 
 // Connect to the DB
@@ -75,7 +74,7 @@ router.post('/', async function (req, res, next) {
         { upsert: true }
     );
 
-    res.send(time);
+    res.send({ time });
 });
 
 module.exports = router;
