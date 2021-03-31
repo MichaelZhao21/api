@@ -16,6 +16,7 @@
 
         <script lang="javascript" type="text/javascript">
             let listStore = [];
+
             async function getReq(name = '') {
                 return new Promise((resolve, reject) => {
                     $.get(`/usage/data/${name}`, data => resolve(data)).fail(() => {
@@ -28,9 +29,44 @@
                 const name = $('#name-picker').val();
                 if (name === 'default') return;
                 listStore = await getReq(name);
+                createTable();
             }
 
-            async function createChart() {
+            async function createTable() {
+                const table = $('#table');
+                table.html('');
+                const split = getIntervalData().map(l => dayjs(l).format('MMM D, YYYYTh:mm a').split('T'));
+                split.forEach(s => {
+                    let row = $('<div class="table-row"></div>');
+                    row.append($(`<p class="table-item date">${s[0]}</p>`));
+                    row.append($(`<p class="table-item time">${s[1]}</p>`));
+                    table.append(row);
+                });
+            }
+
+            async function changeInterval() {
+                createTable();
+            }
+
+            function getIntervalData() {
+                let now = dayjs();
+                let start;
+                const interval = $('#interval-picker').val();
+
+                if (interval === 'all') return listStore;
+                else if (interval === '3hour') start = now.subtract(3, 'hour');
+                else start = now.subtract(1, interval);
+
+                console.log(now);
+                console.log(start);
+                
+                let minTime = start.valueOf();
+                let i = 0;
+                for (i = listStore.length - 1; i >= 0; i--) {
+                    if (listStore[i] < minTime) break;
+                }
+                
+                return listStore.slice(i + 1);
             }
 
             $(document).ready(async () => {
@@ -55,14 +91,33 @@
             html {
                 font-size: 16px;
             }
+
             body {
                 font-family: 'Roboto';
                 font-weight: 500;
-            }
-            h1 {
                 text-align: center;
+            }
+
+            h1 {
                 font-weight: 300;
                 font-size: 4rem;
+            }
+
+            #table {
+                width: 14rem;
+                margin: auto;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .table-row {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .table-item {
+                margin: 0.1rem;
+                width: 7rem;
             }
         </style>
     </head>
@@ -83,6 +138,7 @@
         <div id="message-container">
             <p id="message">Loading...</p>
         </div>
+        <div id="table"></div>
         <canvas id="graph"></canvas>
     </body>
 
