@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const path = require('path');
 const now = require('../functions/now');
 const Usage = require('../models/usageData');
 
@@ -18,6 +19,22 @@ db.once('open', () => {
 });
 
 // PATH: /usage
+router.get('/', async function (req, res, next) {
+    res.sendFile(path.join(__dirname, '..', '..', 'public', 'pages', 'usage.html'));
+});
+
+router.get('/data', async function (req, res, next) {
+    const data = await Usage.find();
+    const names = data.map((d) => d.name);
+    res.send(names);
+});
+
+router.get('/data/:name', async function (req, res, next) {
+    const data = await Usage.findOne({ name: req.params.name });
+    if (data === null) res.send([]);
+    else res.send(data.accessList);
+});
+
 router.post('/', async function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
 
@@ -36,7 +53,7 @@ router.post('/', async function (req, res, next) {
     }
 
     // Get current time
-    const time = now();
+    const time = new Date().getTime();
 
     // Find if document exists
     let document = await Usage.findOne({ name: req.body.name });
@@ -47,11 +64,16 @@ router.post('/', async function (req, res, next) {
     }
 
     // Update or insert the document
-    await Usage.updateOne({ name: req.body.name }, { $set: {
-        name: document.name,
-        accessList: document.accessList,
-        count: document.accessList.length,
-    } }, { upsert: true });
+    await Usage.updateOne(
+        { name: req.body.name },
+        {
+            $set: {
+                name: document.name,
+                accessList: document.accessList,
+            },
+        },
+        { upsert: true }
+    );
 
     res.send(time);
 });

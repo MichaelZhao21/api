@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>App Usage!</title>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.4/dayjs.min.js"
+            integrity="sha256-NTsR4SOm3YHfJrmrmvBtEYqfQ6jQ5yvEKMhgQe3DIl0=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+            integrity="sha256-t9UJPrESBeG2ojKTIcFLPGF7nHi2vEc7f5A2KpH/UBU=" crossorigin="anonymous"></script>
+
+        <script lang="javascript" type="text/javascript">
+            let listStore = [];
+            async function getReq(name = '') {
+                return new Promise((resolve, reject) => {
+                    $.get(`/usage/data/${name}`, data => resolve(data)).fail(() => {
+                        reject('Failed to get data')
+                    });
+                })
+            }
+
+            async function fetchData() {
+                const name = $('#name-picker').val();
+                if (name === 'default') return;
+                listStore = await getReq(name);
+            }
+
+            async function createChart() {
+            }
+
+            $(document).ready(async () => {
+                const dropdown = $('#name-picker');
+                try {
+                    const names = await getReq();
+                    names.forEach(name => {
+                        dropdown.append($(`<option value=${name}>${name}</option>`));
+                    });
+                    $('#message').text('Please pick a name to show its data!');
+                } catch (error) {
+                    console.error(error);
+                    $('#message').text('Could not fetch data :(');
+                }
+            });
+        </script>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+
+        <style>
+            html {
+                font-size: 16px;
+            }
+            body {
+                font-family: 'Roboto';
+                font-weight: 500;
+            }
+            h1 {
+                text-align: center;
+                font-weight: 300;
+                font-size: 4rem;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>App Usage Logs :)</h1>
+        <select id="name-picker" onchange="fetchData()">
+            <option value="default" selected>Pick a name...</option>
+        </select>
+        <select id="interval-picker" onchange="changeInterval()">
+            <option value="hour">Last Hour</option>
+            <option value="3hour" selected>Last 3 Hours</option>
+            <option value="day">Last Day</option>
+            <option value="week">Last Week</option>
+            <option value="month">Last Month</option>
+            <option value="all">All Time</option>
+        </select>
+        <div id="message-container">
+            <p id="message">Loading...</p>
+        </div>
+        <canvas id="graph"></canvas>
+    </body>
+
+</html>
