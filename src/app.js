@@ -20,6 +20,9 @@ app.use(express.urlencoded({ limit: '50mb', extended: true, parameterLimit: 5000
 // Use CORS
 app.use(cors());
 
+// Serve public files
+app.use(express.static('public'));
+
 // App routes
 app.use('/', indexRouter); // Home page + Admin page
 app.use(['/static', '/images'], staticRouter); // Serve static images from Dropbox
