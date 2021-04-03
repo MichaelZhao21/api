@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <title>App Usage!</title>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -31,33 +32,126 @@
             }
 
             async function createVisuals() {
+                // Create table
                 const table = $('#table');
-                table.html('');
-                const split = getIntervalData().map(l => dayjs(l).format('MMM D, YYYYTh:mm a').split('T'));
+                table.html('<h2 id="table-header">Time List</h2>');
+                const split = getIntervalData().map(l => dayjs(l).format('MMM D, YYYYTh:mm:ss a').split('T'));
                 split.forEach(s => {
                     let row = $('<div class="table-row"></div>');
                     row.append($(`<p class="table-item date">${s[0]}</p>`));
                     row.append($(`<p class="table-item time">${s[1]}</p>`));
                     table.append(row);
                 });
+
+                // Create graph
+                const graph = $('#graph');
+                graph.html('<div id="graph-centerline"></div>');
+                const labels = getTimeLabels();
+                labels.forEach(l => {
+                    graph.append(`<p class="graph-time" style="top:${l.pos}">${l.text}</p>`);
+                });
+
+                const startTime = getStartTime();
+                const now = dayjs().valueOf();
+                getOverlappedInterval().forEach(i => {
+                    const width = Math.min(i.count, 40) * 5 + 10;
+                    const top = 100 * (i.val - startTime) / (now - startTime);
+                    graph.append(`<div class="graph-line" style="width:${width}px;left:calc(70% - ((${width}px - 5px) / 2));top:${top}%"></div>`)
+                });
+
+                // Update message
+                $('#message').text(`Showing data for ${$('#name-picker').val()}`);
             }
 
             function getIntervalData() {
-                let now = dayjs();
-                let start;
-                const interval = $('#interval-picker').val();
-
-                if (interval === 'all') return listStore;
-                else if (interval === '3hour') start = now.subtract(3, 'hour');
-                else start = now.subtract(1, interval);
-
-                let minTime = start.valueOf();
+                let minTime = getStartTime();
                 let i = 0;
                 for (i = listStore.length - 1; i >= 0; i--) {
                     if (listStore[i] < minTime) break;
                 }
-                
-                return listStore.slice(i + 1);
+
+                return listStore.slice(i + 1).reverse();
+            }
+
+            function getStartTime() {
+                let now = dayjs();
+                let start;
+                const interval = $('#interval-picker').val();
+
+                if (interval === 'all') return listStore[0];
+                else if (interval === '3hour') start = now.subtract(3, 'hour');
+                else start = now.subtract(1, interval);
+
+                return start.valueOf();
+            }
+
+            function getTimeLabels() {
+                let labels = [];
+                let { count, range } = calcRangeFromInterval();
+                const now = dayjs();
+                const format = getFormat(range);
+
+                for (let i = 0; i < count + 1; i++) {
+                    labels.push({ text: now.subtract(i, range).format(format), pos: `${(100 * i / count) - 1}%` });
+                }
+
+                if ($('#interval-picker').val() === 'all') labels[labels.length - 1].text = dayjs(listStore[0]).format(format);
+
+                return labels;
+            }
+
+            function calcRangeFromInterval() {
+                const interval = $('#interval-picker').val();
+
+                let count = 1;
+                let range = 'hour';
+                if (interval === '3hour') count = 3;
+                else if (interval === 'day') count = 24;
+                else if (interval === 'week') {
+                    count = 7;
+                    range = 'day';
+                }
+                else if (interval === 'month') {
+                    count = 31;
+                    range = 'month';
+                }
+                else if (interval === 'all') {
+                    count = Math.round(((new Date().getTime()) - getStartTime()) / 2629800000) + 1;
+                    range = 'month';
+                }
+
+                return { count, range };
+            }
+
+            function getFormat(range) {
+                if (range === 'hour') return 'h:mm a';
+                if (range === 'day') return 'M/D';
+                return 'M/D/YY';
+            }
+
+            function getOverlappedInterval() {
+                const data = getIntervalData();
+                const { range } = calcRangeFromInterval();
+
+                let overlapFormat = 'YYYY-MM-DD';
+                if (range !== 'month') {
+                    overlapFormat += ' HH';
+                    if (range !== 'day') overlapFormat += '-mm';
+                }
+
+                let corrected = [];
+                let current = { val: data[0], count: 1 };
+                for (let i = 1; i < data.length; i++) {
+                    if (dayjs(current.val).format(overlapFormat) === dayjs(data[i]).format(overlapFormat)) {
+                        current.count++;
+                    }
+                    else {
+                        corrected.push({ ...current });
+                        current = { val: data[i], count: 1 };
+                    }
+                }
+                corrected.push(current);
+                return corrected;
             }
 
             $(document).ready(async () => {
@@ -75,29 +169,59 @@
         </script>
 
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&family=Roboto+Slab:wght@400&display=swap"
+            rel="stylesheet">
 
         <style>
             html {
+                min-height: 100%;
                 font-size: 16px;
             }
 
             body {
-                font-family: 'Roboto';
-                font-weight: 500;
+                height: 100%;
+                font-family: 'Roboto Slab', serif;
+                font-weight: 400;
                 text-align: center;
             }
 
             h1 {
-                font-weight: 300;
-                font-size: 4rem;
+                font-weight: 400;
+                font-size: 3rem;
+                margin: 1rem;
+            }
+
+            select {
+                margin-bottom: 0.5rem;
+            }
+
+            #header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 25vh;
+                background-color: white;
+                box-shadow: 0 0 5px #ddd;
+            }
+
+            #data-container {
+                margin-top: 30vh;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
             }
 
             #table {
-                width: 14rem;
-                margin: auto;
+                width: 20vw;
                 display: flex;
                 flex-direction: column;
+            }
+
+            #table-header {
+                margin: 0;
+                margin-bottom: 0.5rem;
             }
 
             .table-row {
@@ -107,29 +231,106 @@
 
             .table-item {
                 margin: 0.1rem;
-                width: 7rem;
+                width: 50%;
+                font-size: 0.85rem;
+            }
+
+            .table-item.date {
+                text-align: right;
+                padding-right: 0.25rem;
+            }
+
+            .table-item.time {
+                text-align: left;
+                padding-left: 0.25rem;
+            }
+
+            #graph {
+                position: sticky;
+                top: 30vh;
+                width: 20vw;
+                height: 65vh;
+            }
+
+            #graph-centerline {
+                width: 5px;
+                height: 100%;
+                margin-left: 70%;
+                background-color: #212121;
+            }
+
+            .graph-line {
+                /* width overridden */
+                height: 3px;
+                position: absolute;
+                /* top overridden */
+                /* left overridden: 70% - ((width - 10px) / 2) */
+
+                background-color: #d5adfc;
+            }
+
+            .graph-time {
+                position: absolute;
+                /* top overridden */
+                margin: 0;
+                left: 7vw;
+
+                text-align: left;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 500;
+                font-size: 0.65rem;
+            }
+
+            @media only screen and (max-width: 652px) {
+                h1 {
+                    font-size: 2rem;
+                }
+
+                .graph-time {
+                    left: 0;
+                }
+
+                #table {
+                    width: 50vw;
+                }
+
+                #graph {
+                    width: 30vw;
+                }
             }
         </style>
     </head>
 
     <body>
-        <h1>App Usage Logs :)</h1>
-        <select id="name-picker" onchange="fetchData()">
-            <option value="default" selected>Pick a name...</option>
-        </select>
-        <select id="interval-picker" onchange="createVisuals()">
-            <option value="hour">Last Hour</option>
-            <option value="3hour" selected>Last 3 Hours</option>
-            <option value="day">Last Day</option>
-            <option value="week">Last Week</option>
-            <option value="month">Last Month</option>
-            <option value="all">All Time</option>
-        </select>
-        <div id="message-container">
-            <p id="message">Loading...</p>
+        <div id="header">
+            <h1>App Usage Logs :)</h1>
+            <label for="name-picker">Name:</label>
+            <select id="name-picker" onchange="fetchData()">
+                <option value="default" selected>Pick a name...</option>
+            </select>
+            <br />
+            <label for="interval-picker">Time Range:</label>
+            <select id="interval-picker" onchange="createVisuals()">
+                <option value="hour">Last Hour</option>
+                <option value="3hour">Last 3 Hours</option>
+                <option value="day" selected>Last Day</option>
+                <option value="week">Last Week</option>
+                <option value="month">Last Month</option>
+                <option value="all">All Time</option>
+            </select>
+            <div id="message-container">
+                <p id="message">Loading...</p>
+            </div>
         </div>
-        <div id="table"></div>
-        <canvas id="graph"></canvas>
+        <div id="data-container">
+            <div id="graph" class="data-item">
+                <div id="graph-centerline"></div>
+                <div class="graph-line"></div>
+            </div>
+            <div id="table" class="data-item">
+                <h2 id="table-header">Time List</h2>
+            </div>
+        </div>
     </body>
 
 </html>
