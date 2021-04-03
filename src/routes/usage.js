@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const path = require('path');
 const Usage = require('../models/usageData');
+var now = require('../functions/now');
 
 // Connect to the DB
 var connected = false;
