@@ -139,6 +139,8 @@
                     if (range !== 'day') overlapFormat += '-mm';
                 }
 
+                if (data.length === 0) return [];
+                
                 let corrected = [];
                 let current = { val: data[0], count: 1 };
                 for (let i = 1; i < data.length; i++) {
