@@ -22,7 +22,7 @@ db.once('open', () => {
 
 // PATH: /usage
 router.get('/', async function (req, res, next) {
-    console.log(`[${now()}] GET ${req.path}`);
+    console.log(`[${now()}] GET ${req.originalUrl}`);
     res.sendFile(path.join(__dirname, '..', '..', 'public', 'pages', 'usage.html'));
 });
 

@@ -55,7 +55,7 @@
                 const now = dayjs().valueOf();
                 getOverlappedInterval().forEach(i => {
                     const width = Math.min(i.count, 40) * 5 + 10;
-                    const top = 100 * (i.val - startTime) / (now - startTime);
+                    const top = 100 * (1 - (i.val - startTime) / (now - startTime));
                     graph.append(`<div class="graph-line" style="width:${width}px;left:calc(70% - ((${width}px - 5px) / 2));top:${top}%"></div>`)
                 });
 
