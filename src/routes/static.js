@@ -14,8 +14,6 @@ var cache = {};
 // TODO: Clear cache on start
 
 router.get(/\/(?!upload).*/, function (req, res, next) {
-    console.log(`[${now()}] GET /static${req.path}`);
-
     // Check to see if files are in the cache
     if (Object.keys(cache).find(key => key === req.path)) {
         res.sendFile(cache[req.path]);

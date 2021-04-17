@@ -12,6 +12,7 @@ var todoRouter = require('./routes/todo');
 var photoRouter = require('./routes/photo');
 var loggingRouter = require('./routes/logging');
 var usageRouter = require('./routes/usage');
+var newsRouter = require('./routes/news');
 
 // Body parser for JSON and X-WWW-FORM-URLENCODED formats
 app.use(express.json());
@@ -30,6 +31,7 @@ app.use('/todo', todoRouter); // TODO: remove this todo endpoint
 app.use('/photo', photoRouter); // Unsplash photos API -> Also get rid of or reduce
 app.use('/log', loggingRouter); // Logging endpoint
 app.use('/usage', usageRouter); // Log app usage :)
+app.use('/news', newsRouter); // NYT API
 
 app.listen(process.env.PORT || 8080, () =>
     console.log(`Listening on port ${process.env.PORT || 8080}`)
