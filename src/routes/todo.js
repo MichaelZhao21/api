@@ -1,33 +1,21 @@
-var express = require('express');
-var router = express.Router();
-var path = require('path');
-var fs = require('fs');
+const express = require('express');
+const router = express.Router();
+const { sendError } = require('../functions/util');
+const { TaskTabUser, connection } = require('../schemas/taskTabConnection');
+const todoSchema = require('../schemas/todoItem');
 
-const todoFilePath = path.join(__dirname, '..', 'temp/todo.md');
+router.get('/:username', async function (req, res, next) {
+    const user = await TaskTabUser.findOne({ name: req.params.username });
+    if (user === null) {
+        sendError(res, 400, 'Invalid username');
+        return;
+    }
 
-router.get('/', function(req, res, next) {
-    fs.readFile(todoFilePath, 'utf8', function(err, data) {
-        if (err) {
-            res.sendStatus(500);
-            return console.log(err);
-        }
-        res.send(data);
-    }); 
+    const TodoItem = connection.model('Todo Item', todoSchema, user.uid);
+    const list = await TodoItem.find();
+    res.send(list);
 });
 
-router.post('/edit', function(req, res, next) {
-    if (req.body.data) {
-        fs.writeFile(todoFilePath, req.body.data, 'utf8', function (err) {
-            if (err) {
-                res.sendStatus(500);
-                return console.log(err);
-            }
-            res.sendStatus(200);
-        });
-    }
-    else {
-        res.sendStatus(400);
-    }
-});
+router.post('/edit', function (req, res, next) {});
 
 module.exports = router;
