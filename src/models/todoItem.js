@@ -7,7 +7,10 @@ const todoSchema = new mongoose.Schema(
         priority: Number,
         due: Number,
         tags: [String],
-    }
+    },
+    { collection: 'todo' }
 );
 
-module.exports = todoSchema;
+const TodoItem = mongoose.model('Todo Item', todoSchema);
+
+module.exports = TodoItem;
