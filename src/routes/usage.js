@@ -8,9 +8,13 @@ var now = require('../functions/now');
 // Connect to the DB
 var connected = false;
 const DB_URL = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@api-db.kxhun.mongodb.net/data?retryWrites=true&w=majority`;
-mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
-    if (err) console.dir(err);
-});
+mongoose.connect(
+    DB_URL,
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
+    (err) => {
+        if (err) console.dir(err);
+    }
+);
 
 // Listen for connection
 const db = mongoose.connection;
