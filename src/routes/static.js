@@ -15,16 +15,23 @@ var cache = {};
 
 router.get(/\/(?!upload).*/, function (req, res, next) {
     // Check to see if files are in the cache
-    if (Object.keys(cache).find(key => key === req.path)) {
+    if (Object.keys(cache).find((key) => key === req.path)) {
         res.sendFile(cache[req.path]);
         return;
     }
 
     // Downlaod files from dropbox
+    console.log(req.path);
     dbx.filesDownload({ path: req.path })
         .then((data) => {
             // Write image to file
-            const filePath = path.join(__dirname, '..', 'temp', 'images', req.path.substring(1).replaceAll('/', '--'));
+            const filePath = path.join(
+                __dirname,
+                '..',
+                'temp',
+                'images',
+                req.path.substring(1).replaceAll('/', '--')
+            );
             fs.writeFile(filePath, data.result.fileBinary, () => {
                 // Send that file and save to cache
                 // Then delete it after cache timeout
@@ -36,7 +43,8 @@ router.get(/\/(?!upload).*/, function (req, res, next) {
                 }, CACHE_TIMEOUT);
             });
         })
-        .catch(() => {
+        .catch((err) => {
+            console.error(err);
             // No file at path
             res.status(400);
             res.send({
