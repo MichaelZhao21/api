@@ -24,7 +24,7 @@ router.get(/\/(?!upload).*/, function (req, res, next) {
     dbx.filesDownload({ path: req.path })
         .then((data) => {
             // Write image to file
-            var filePath = path.join(__dirname, '..', 'temp', 'images', req.path.substring(1).replace('/', '-'));
+            const filePath = path.join(__dirname, '..', 'temp', 'images', req.path.substring(1).replaceAll('/', '--'));
             fs.writeFile(filePath, data.result.fileBinary, () => {
                 // Send that file and save to cache
                 // Then delete it after cache timeout
