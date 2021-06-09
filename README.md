@@ -1,0 +1,12 @@
+# This is my personal API
+
+.env
+```
+ADMIN_PASS=""
+MONGO_USER=""
+MONGO_PASS=""
+MONGO_URL=""
+NYT_API_KEY=""
+UNSPLASH_ACCESS=""
+UNSPLASH_SECRET=""
+```

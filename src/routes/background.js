@@ -12,7 +12,7 @@ const { randInt } = require('../functions/util');
 const keywords = ['mountains', 'trees', 'clouds', 'hills', 'landscape', 'ocean', 'stars', 'space'];
 const photoDataFile = path.join(__dirname, '..', 'temp/photoData.json');
 
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
     fs.readFile(photoDataFile, (err, rawData) => {
         if (err) return console.log(err);
         let data = JSON.parse(rawData);
@@ -30,13 +30,13 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.get('/new', function (req, res, next) {
+router.get('/new', async function (req, res, next) {
     getNewPhoto(res);
 });
 
 function getNewPhoto(res) {
     var currDate = new Date();
-    newImage().then((data) => {
+    retrieveNewImage().then((data) => {
         fs.writeFile(
             photoDataFile,
             JSON.stringify({ date: currDate.valueOf(), photo: data }, null, 2),
@@ -48,7 +48,7 @@ function getNewPhoto(res) {
     });
 }
 
-async function newImage() {
+async function retrieveNewImage() {
     const unsplash = new Unsplash({ accessKey: creds.unsplash.access });
     const response = await unsplash.photos.getRandomPhoto({
         query: keywords[randInt(0, keywords.length)],
