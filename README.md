@@ -1,6 +1,7 @@
 # This is my personal API
 
 .env
+
 ```
 ADMIN_PASS=""
 MONGO_USER=""
@@ -10,3 +11,13 @@ NYT_API_KEY=""
 UNSPLASH_ACCESS=""
 UNSPLASH_SECRET=""
 ```
+
+## Endpoints
+
+| Protected | Method | Path            | Description                                        |
+| --------- | ------ | --------------- | -------------------------------------------------- |
+| N         | GET    | /               | Sends the default message to the user              |
+| (Y)       | GET    | /admin          | Displays the admin dashboard                       |
+| N         | GET    | /news           | Fetches the most recent headlines from the NYT API |
+| N         | GET    | /background     | Sends the URL of the latest background image       |
+| Y         | POST   | /background/new | Fetches a new background from Unsplash             |

@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const compression = require('compression');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 var app = express();
 
 // Use .env file
@@ -20,6 +22,12 @@ app.use(cors());
 
 // Use compression middleware
 app.use(compression());
+
+// Parse cookies
+app.use(cookieParser());
+
+// Log all requests to STDOUT
+app.use(morgan('combined'));
 
 // Serve public files
 app.use(express.static('public'));

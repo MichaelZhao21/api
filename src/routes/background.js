@@ -1,13 +1,14 @@
 var express = require('express');
 const Unsplash = require('unsplash-js').default;
 var router = express.Router();
-var creds = require('../../creds.json');
 const fetch = require('node-fetch');
 const { toJson } = require('unsplash-js');
-global.fetch = fetch;
 const fs = require('fs');
 const path = require('path');
 const { randInt } = require('../functions/util');
+
+// Why does this exist???
+global.fetch = fetch;
 
 const keywords = ['mountains', 'trees', 'clouds', 'hills', 'landscape', 'ocean', 'stars', 'space'];
 const photoDataFile = path.join(__dirname, '..', 'temp/photoData.json');
@@ -49,7 +50,7 @@ function getNewPhoto(res) {
 }
 
 async function retrieveNewImage() {
-    const unsplash = new Unsplash({ accessKey: creds.unsplash.access });
+    const unsplash = new Unsplash({ accessKey: process.env.UNSPLASH_ACCESS });
     const response = await unsplash.photos.getRandomPhoto({
         query: keywords[randInt(0, keywords.length)],
         featured: true,
