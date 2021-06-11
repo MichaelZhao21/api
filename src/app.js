@@ -3,10 +3,14 @@ const cors = require('cors');
 const compression = require('compression');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 var app = express();
 
 // Use .env file
 require('dotenv').config();
+
+// Make sure the correct variables are defined
+checkEnv();
 
 // Import routers
 const indexRouter = require('./routes/index');
@@ -41,3 +45,25 @@ app.use('/background', backgroundRouter); // Background Unsplash API
 app.listen(process.env.PORT || 8080, () =>
     console.log(`Listening on port ${process.env.PORT || 8080}`)
 );
+
+// Start mongoose
+const mongoUrl = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_URL}/data?retryWrites=true&w=majority`;
+mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// Callbacks for db connections
+const db = mongoose.connection;
+db.on('error', (error) => {
+    console.error(error);
+    process.exit(1);
+});
+db.once('open', () => console.log('Connected to mongodb database!'));
+
+function checkEnv() {
+    const envList = ['MONGO_USER', 'MONGO_PASS', 'MONGO_URL', 'ADMIN_PASS', 'NYT_API_KEY', 'UNSPLASH_ACCESS', 'UNSPLASH_SECRET'];
+    envList.forEach((e) => {
+        if (process.env[e] === undefined) {
+            console.error(`ERROR: The ${e} environmental variable was not defined.`);
+            process.exit(1);
+        }
+    })
+}

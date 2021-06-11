@@ -1,7 +1,6 @@
 var express = require('express');
 var path = require('path');
 var router = express.Router();
-var now = require('../functions/now');
 
 router.get('/', function (req, res, next) {
     res.send({

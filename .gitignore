@@ -1,6 +1,4 @@
 /node_modules
 */temp
-*creds.json
-/public/images
 yarn-error.log
 .env
