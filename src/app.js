@@ -47,7 +47,7 @@ app.listen(process.env.PORT || 8080, () =>
 );
 
 // Start mongoose
-const mongoUrl = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_URL}/data?retryWrites=true&w=majority`;
+const mongoUrl = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_URL}/data?retryWrites=true&w=majority`;
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Callbacks for db connections
@@ -59,7 +59,7 @@ db.on('error', (error) => {
 db.once('open', () => console.log('Connected to mongodb database!'));
 
 function checkEnv() {
-    const envList = ['MONGO_USER', 'MONGO_PASS', 'MONGO_URL', 'ADMIN_PASS', 'NYT_API_KEY', 'UNSPLASH_ACCESS', 'UNSPLASH_SECRET'];
+    const envList = ['MONGO_USER', 'MONGO_PASS', 'MONGO_URL', 'ADMIN_KEY', 'NYT_API_KEY', 'UNSPLASH_ACCESS', 'UNSPLASH_SECRET'];
     envList.forEach((e) => {
         if (process.env[e] === undefined) {
             console.error(`ERROR: The ${e} environmental variable was not defined.`);
