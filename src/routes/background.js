@@ -21,7 +21,7 @@ router.get('/', async function (req, res, next) {
 router.get('/random', async function (req, res, next) {
     const randomImage = await getRandomImage();
     res.setHeader('Cache-Control', 'no-store');
-    res.send(randomImage);
+    res.send(randomImage[0]);
 });
 
 router.get('/id/:id', async function (req, res, next) {
