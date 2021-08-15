@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 /node_modules
 /routes/files
 /public/images
 yarn-error.log
+=======
+/node_modules
+*/temp
+yarn-error.log
+>>>>>>> e515e0111aa4e8f3c07d11887e24c8d265f70d05
 .env

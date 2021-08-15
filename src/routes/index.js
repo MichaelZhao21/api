@@ -16,7 +16,7 @@ router.get('/', async function (req, res, next) {
 });
 
 router.get('/admin', async function (req, res, next) {
-    res.sendFile(path.join(__dirname, '..', 'public', 'admin.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'pages', 'admin.html'));
 });
 
 module.exports = router;
