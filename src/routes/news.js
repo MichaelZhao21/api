@@ -29,6 +29,8 @@ router.get('/', async function (req, res, next) {
         res.send(newNews);
         return;
     }
+    res.send(oldNews);
+    return;
 });
 
 module.exports = router;
