@@ -29,7 +29,7 @@ router.get('/', async function (req, res, next) {
         res.send(newNews);
         return;
     }
-    res.send(oldNews);
+    res.send(oldNews.data);
     return;
 });
 
