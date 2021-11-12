@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(morgan('combined'));
 
 // Serve public files
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
 
 // Standard routes
 app.use('/', indexRouter);

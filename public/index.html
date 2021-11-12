@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Michael's API!</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/" />
+        <link rel="stylesheet" href="./index.css" />
+    </head>
+    <body>
+        <h1>Michael's API</h1>
+        <p>
+            Hello! I hope your doing well :DD Feel free to use any resource on my api, keeping in
+            mind that its only being run from a low-end single server and is likely to change at any
+            time. The table below lists all the endpoints that can be accessed.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Path</th>
+                    <th>Method</th>
+                    <th>Public</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>/</td>
+                    <td>GET</td>
+                    <td>Y</td>
+                    <td>Will return this page</td>
+                </tr>
+                <tr>
+                    <td>/news</td>
+                    <td>GET</td>
+                    <td>Y</td>
+                    <td>Will return a list of top headlines for the hour</td>
+                </tr>
+            </thead>
+        </table>
+    </body>
+</html>
