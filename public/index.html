@@ -42,6 +42,24 @@
                     <td>Y</td>
                     <td>Will return a list of top headlines for the hour</td>
                 </tr>
+                <tr>
+                    <td>/temp/&lt;id&gt;</td>
+                    <td>GET</td>
+                    <td>N</td>
+                    <td>Returns a temporarily stored object's metadata</td>
+                </tr>
+                <tr>
+                    <td>/temp/data/&lt;id&gt;</td>
+                    <td>GET</td>
+                    <td>N</td>
+                    <td>Returns a temporarily stored object's data from S3</td>
+                </tr>
+                <tr>
+                    <td>/temp</td>
+                    <td>POST</td>
+                    <td>N</td>
+                    <td>Adds a temporary object to the database</td>
+                </tr>
             </thead>
         </table>
     </body>
