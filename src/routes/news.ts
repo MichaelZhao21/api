@@ -1,10 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const News = require('../models/news');
-const dayjs = require('dayjs');
-const fetch = require('node-fetch');
-const { sendError } = require('../util');
+import express from 'express';
+import dayjs from 'dayjs';
+import fetch from 'node-fetch';
 
+import { sendError } from '../util';
+import News from '../models/news';
+
+const router = express.Router();
 
 /* /news */
 router.get('/', async function (req, res, next) {
@@ -13,7 +14,7 @@ router.get('/', async function (req, res, next) {
         const newNews = await fetch(
             `https://newsapi.org/v2/top-headlines?sources=bbc-news,associated-press,google-news&apiKey=${process.env.NEWS_API_KEY}`
         ).then((data) => data.json());
-        if (newNews.status !== 'ok') {
+        if (newNews['status'] !== 'ok') {
             sendError(res, 500, 'Unable to retrieve new news :(');
             return;
         }
@@ -33,4 +34,4 @@ router.get('/', async function (req, res, next) {
     return;
 });
 
-module.exports = router;
+export default router;

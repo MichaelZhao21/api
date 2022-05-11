@@ -1,18 +1,18 @@
-const express = require('express');
-const cors = require('cors');
-const compression = require('compression');
-const helmet = require('helmet');
-const cookieParser = require('cookie-parser');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
+import express from 'express';
+import cors from 'cors';
+import compression from 'compression';
+import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
 const app = express();
 
 // Use .env file
 require('dotenv').config();
 
 // Import routers
-const indexRouter = require('./routes/index');
-const newsRouter = require('./routes/news');
+import indexRouter from './routes/index';
+import newsRouter from './routes/news';
 
 // Middleware for JSON and X-WWW-FORM-URLENCODED formats
 app.use(express.json());
