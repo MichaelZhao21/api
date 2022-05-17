@@ -16,7 +16,7 @@
         "helmet": "^4.6.0",
         "mongoose": "^5.13.7",
         "morgan": "~1.9.1",
-        "node-fetch": "2.6.1",
+        "node-fetch": "2.6.7",
         "pm2": "^4.4.0",
         "saslprep": "^1.0.3"
     },
