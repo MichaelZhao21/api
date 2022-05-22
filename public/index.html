@@ -22,6 +22,10 @@
             mind that its only being run from a low-end single server and is likely to change at any
             time. The table below lists all the endpoints that can be accessed.
         </p>
+        <p>
+            Since this isn't that complex and the private endpoints aren't all that important, I
+            just use a query parameter for auth LOL. It's just an extra ?auth=key for private endpoints.
+        </p>
         <table>
             <thead>
                 <tr>
@@ -42,11 +46,17 @@
                     <td>Y</td>
                     <td>Will return a list of top headlines for the hour</td>
                 </tr>
+                <!-- <tr>
+                    <td>/pin</td>
+                    <td>GET</td>
+                    <td>Y</td>
+                    <td>Gets a list of saved boards</td>
+                </tr> -->
                 <tr>
                     <td>/pin/&lt;board&gt;</td>
                     <td>GET</td>
                     <td>Y</td>
-                    <td>Gets a random pin from specified board; this will update each hour</td>
+                    <td>Gets one of the last 50 pins randomly from specified board</td>
                 </tr>
                 <!-- <tr>
                     <td>/temp/&lt;id&gt;</td>

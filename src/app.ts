@@ -13,6 +13,7 @@ require('dotenv').config();
 // Import routers
 import indexRouter from './routes/index';
 import newsRouter from './routes/news';
+import pinsRouter from './routes/pins';
 
 // Middleware for JSON and X-WWW-FORM-URLENCODED formats
 app.use(express.json());
@@ -31,6 +32,7 @@ app.use(express.static('public'));
 // Standard routes
 app.use('/', indexRouter);
 app.use('/news', newsRouter);
+app.use('/pin', pinsRouter);
 
 app.listen(process.env.PORT || 8080, () =>
     console.log(`Listening on port ${process.env.PORT || 8080}`)

@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 type StatusMap = {
     [id: number]: string;
@@ -27,4 +27,13 @@ export function sendError(res: Response, status: number, message: string) {
         statusMessage: `${status} ${statusList[status]}`,
         error: message,
     });
+}
+
+/**
+ * Checks for authentication token in query parameters
+ *
+ * @param req The express request object
+ */
+export function isAuth(req: Request): boolean {
+    return req.query['auth'] === process.env.ADMIN_KEY;
 }
