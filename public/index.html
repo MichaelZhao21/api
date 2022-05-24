@@ -58,6 +58,24 @@
                     <td>Y</td>
                     <td>Gets one of the last 50 pins randomly from specified board</td>
                 </tr>
+                <tr>
+                    <td>/link</td>
+                    <td>GET</td>
+                    <td>Y</td>
+                    <td>Returns a list of saved short links</td>
+                </tr>
+                <tr>
+                    <td>/link/&lt;board&gt;</td>
+                    <td>GET</td>
+                    <td>Y</td>
+                    <td>Redirects to the given short link</td>
+                </tr>
+                <tr>
+                    <td>/link</td>
+                    <td>POST</td>
+                    <td>Y</td>
+                    <td>Body: { short: String, full: String }, with the full url being redirected to by the short link /link/:short:</td>
+                </tr>
                 <!-- <tr>
                     <td>/temp/&lt;id&gt;</td>
                     <td>GET</td>

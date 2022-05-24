@@ -14,6 +14,7 @@ require('dotenv').config();
 import indexRouter from './routes/index';
 import newsRouter from './routes/news';
 import pinsRouter from './routes/pins';
+import linkRouter from './routes/link';
 
 // Middleware for JSON and X-WWW-FORM-URLENCODED formats
 app.use(express.json());
@@ -33,6 +34,7 @@ app.use(express.static('public'));
 app.use('/', indexRouter);
 app.use('/news', newsRouter);
 app.use('/pin', pinsRouter);
+app.use('/link', linkRouter);
 
 app.listen(process.env.PORT || 8080, () =>
     console.log(`Listening on port ${process.env.PORT || 8080}`)
